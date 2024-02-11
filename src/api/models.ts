@@ -1,8 +1,9 @@
 type WithId<T extends Record<string, unknown>> = T & { id: string };
 
 export type LoginRequest = {
-  email: string;
+  username: string;
   password: string;
+  type:string
 };
 
 export type LoginResponse = {
