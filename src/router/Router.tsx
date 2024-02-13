@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { Home } from "../views/home";
 import { Login } from "../views/login";
 import { ProtectedRoute } from ".";
+import ServiceComponent from "../views/services";
 
 
 type Route = {
@@ -15,9 +16,9 @@ type Route = {
 export const ROUTES = {
   HOME: "/",
   LOGIN: "/login",
+  SIGNUP: "/signup",
   LOGIN_VERIFICATION: "/login/verify",
   DASHBOARD: "/home",
-  USERS: "/home/users",
   SERVICES: "/home/services",
 };
 
@@ -34,7 +35,13 @@ const PROTECTED_ROUTES: Route[] = [
     name: "Home",
     path: ROUTES.HOME,
     component: <Home />,
-    children: [],
+    children: [
+      {
+        name:"Services",
+        path: ROUTES.SERVICES,
+        component: <ServiceComponent/>
+      }
+    ],
   },
 
 ];

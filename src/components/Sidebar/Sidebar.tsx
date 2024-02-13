@@ -120,14 +120,14 @@ export default function Sidebar() {
             </ListItemButton>
           </ListItem>
 
-          <ListItem>
-            <ListItemButton onClick={() => navigate("/home/users")}>
-              <DashboardRoundedIcon />
-              <ListItemContent>
-                <Typography level="title-sm">Users</Typography>
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
+          {/*<ListItem>*/}
+          {/*  <ListItemButton onClick={() => navigate("/home/users")}>*/}
+          {/*    <DashboardRoundedIcon />*/}
+          {/*    <ListItemContent>*/}
+          {/*      <Typography level="title-sm">Users</Typography>*/}
+          {/*    </ListItemContent>*/}
+          {/*  </ListItemButton>*/}
+          {/*</ListItem>*/}
 
           {/*<ListItem nested>*/}
           {/*    <Toggler*/}
