@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { LoginRequest } from ".";
+import { CreateServiceRequest, LoginRequest, SignupRequest } from ".";
 import { fetchUtil } from "../utils/fetch.util";
 
 export const useLogin = () => {
@@ -14,12 +14,36 @@ export const useLogin = () => {
   });
 };
 
+export const useSignup = () => {
+  return useMutation({
+    mutationFn: (data: SignupRequest) => {
+      return fetchUtil({
+        url: "/v1/auth/provider/signup",
+        body: data,
+        method: "POST",
+      });
+    },
+  });
+};
+
 export const useLogout = () => {
   return useMutation({
     onMutate: () => {
       return fetchUtil({
         url: "/v1/auth/logout",
         method: "POST",
+      });
+    },
+  });
+};
+
+export const useCreateService = () => {
+  return useMutation({
+    onMutate: (data:CreateServiceRequest) => {
+      return fetchUtil({
+        url: "/v1/service",
+        method: "POST",
+        body: data
       });
     },
   });

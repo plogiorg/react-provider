@@ -9,6 +9,7 @@ export type AuthContextState = {
 
 export type AuthContextActions = {
   login: (data:LoginResponse) => void;
+  signup: (data:LoginResponse) => void;
   logout: () => void;
 };
 

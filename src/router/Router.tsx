@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "../views/home";
-import { Login } from "../views/login";
+import { Login, Signup } from "../views/login";
 import { ProtectedRoute } from ".";
 import ServiceComponent from "../views/services";
+import Profile from "../views/profile";
 
 
 type Route = {
@@ -20,6 +21,7 @@ export const ROUTES = {
   LOGIN_VERIFICATION: "/login/verify",
   DASHBOARD: "/home",
   SERVICES: "/home/services",
+  PROFILE: "/home/profile",
 };
 
 const PUBLIC_ROUTES: Route[] = [
@@ -27,6 +29,11 @@ const PUBLIC_ROUTES: Route[] = [
     name: "Login",
     path: ROUTES.LOGIN,
     component: <Login />,
+  },
+  {
+    name: "Signup",
+    path: ROUTES.SIGNUP,
+    component: <Signup />,
   },
 ];
 
@@ -40,6 +47,11 @@ const PROTECTED_ROUTES: Route[] = [
         name:"Services",
         path: ROUTES.SERVICES,
         component: <ServiceComponent/>
+      },
+      {
+        name:"Profile",
+        path: ROUTES.PROFILE,
+        component: <Profile/>
       }
     ],
   },

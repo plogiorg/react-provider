@@ -29,18 +29,17 @@ type Props = { children: ReactNode };
 export const AuthContextProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, AuthContextInitialValues);
 
-  const { refetch: getCurrentUser } = useCurrentUser();
+  const { data: currentUser, isLoading } = useCurrentUser();
 
   useEffect(() => {
     const initAuth = async () => {
       try {
         dispatch({ type: "SET_LOADING", payload: { isLoading: true } });
-        const { data: userResponse } = await getCurrentUser()
-        if (userResponse?.sub) {
+        if (currentUser?.sub) {
           dispatch({
             type: "SET_USER",
             payload: {
-              user: userResponse,
+              user: currentUser,
             },
           });
         } else {
@@ -53,7 +52,7 @@ export const AuthContextProvider: FC<Props> = ({ children }) => {
     };
 
     initAuth();
-  }, []);
+  }, [isLoading]);
 
   const login = useCallback((data:object) => {
     dispatch({ type: "SET_LOADING", payload: { isLoading: true } });

@@ -16,18 +16,24 @@ import Stack from "@mui/joy/Stack";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
-import { useLogin } from "../../api";
+import { useLogin, useSignup } from "../../api";
 import { LOCALSTORAGE_KEYS } from "../../constants";
 import { useAuth } from "../../contexts";
 import { useNavigate } from "react-router-dom";
+import { CountrySelector } from "../../components";
+import { useState } from "react";
 // import GoogleIcon from '../../assets/react.svg';
 
 interface FormElements extends HTMLFormControlsCollection {
   username: HTMLInputElement;
   password: HTMLInputElement;
-  persistent: HTMLInputElement;
+  confirmPassword: HTMLInputElement;
+  email: HTMLInputElement;
+  phone: HTMLInputElement;
+  firstName: HTMLInputElement;
+  lastName: HTMLInputElement
 }
-interface SignInFormElement extends HTMLFormElement {
+interface SignupFormElement extends HTMLFormElement {
   readonly elements: FormElements;
 }
 
@@ -63,19 +69,19 @@ function ColorSchemeToggle(props: IconButtonProps) {
   );
 }
 
-export default function Login() {
-  const { mutateAsync: login, isLoading } = useLogin();
-  const { login: dispatchLogin } = useAuth();
+export default function Signup() {
+  const { mutateAsync: signup, isLoading } = useSignup();
+  const [country, setCountry] = useState({ code: '', label: '', phone: '' });
   const navigate = useNavigate()
-  const onLoginError = (error: NonNullable<unknown>) => {
+  const onSignupError = (error: NonNullable<unknown>) => {
     console.log(error);
   };
 
-  const onLoginSuccess = (data: any) => {
+  const onSignupSuccess = (data: any) => {
     localStorage.setItem(LOCALSTORAGE_KEYS.TOKEN, data.access_token);
-    dispatchLogin(data)
+    // dispatchLogin(data)
     navigate("/home/services")
-    console.log("logged in..");
+    console.log("signed up..");
   };
   return (
     <CssVarsProvider defaultMode="dark" disableTransitionOnChange>
@@ -160,16 +166,17 @@ export default function Login() {
           >
             <Stack gap={4} sx={{ mb: 2 }}>
               <Stack gap={1}>
-                <Typography level="h3">Sign in</Typography>
+                <Typography level="h3">Signup</Typography>
                 <Typography level="body-sm">
-                  New to company?{" "}
-                  <Link href="/signup" level="title-sm">
-                    Sign up!
+                  Already Have an Account?{" "}
+                  <Link href="#replace-with-a-link" level="title-sm">
+                    Sign In!
                   </Link>
                 </Typography>
               </Stack>
               <Button
                 variant="soft"
+                disabled={true}
                 color="neutral"
                 fullWidth
                 // startDecorator={<GoogleIcon />}
@@ -192,21 +199,31 @@ export default function Login() {
             </Divider>
             <Stack gap={4} sx={{ mt: 2 }}>
               <form
-                onSubmit={async (event: React.FormEvent<SignInFormElement>) => {
+                onSubmit={async (event: React.FormEvent<SignupFormElement>) => {
                   event.preventDefault();
                   const formElements = event.currentTarget.elements;
                   const data = {
                     username: formElements.username.value,
                     password: formElements.password.value,
-                    persistent: formElements.persistent.checked,
-                    type: "provider"
+                    firstName: formElements.firstName.value,
+                    lastName: formElements.lastName.value,
+                    email: formElements.email.value,
+                    phone: formElements.phone.value,
+                    country: "",
                   };
-                  console.log({ data });
+                  console.log({data});
+                  console.log(formElements.confirmPassword.value, "confirm");
+
+                  if (formElements.confirmPassword.value !== data.password) return
+                  if (!country.code) return
+
+                  data.phone = `+${country.phone}${data.phone}`
+                  data.country = country.code
                   try {
-                    await login(data, {
-                      onSuccess: onLoginSuccess,
+                    await signup(data, {
+                      onSuccess: onSignupSuccess,
                       // @ts-expect-error error is unknown at the moment
-                      onError: onLoginError,
+                      onError: onSignupError,
                     });
                   } catch (e) {
                     console.log({ e });
@@ -214,13 +231,46 @@ export default function Login() {
                 }}
               >
                 <FormControl required>
+                  <FormLabel>First Name</FormLabel>
+                  <Input type="firstName" name="firstName" />
+                </FormControl>
+
+                <FormControl required>
+                  <FormLabel>Last Name</FormLabel>
+                  <Input type="lastName" name="lastName" />
+                </FormControl>
+
+                <FormControl required>
                   <FormLabel>Email</FormLabel>
+                  <Input type="email" name="email" />
+                </FormControl>
+
+                <FormControl required>
+                  <FormLabel>Username</FormLabel>
                   <Input type="username" name="username" />
                 </FormControl>
+
                 <FormControl required>
                   <FormLabel>Password</FormLabel>
                   <Input type="password" name="password" />
                 </FormControl>
+
+                <FormControl required>
+                  <FormLabel>Password Confirmation</FormLabel>
+                  <Input type="password" name="confirmPassword" />
+                </FormControl>
+
+                <div>
+                  <CountrySelector key="country" onCountrySelect={(country) => {
+                   setCountry(country.value)
+                  }}  />
+                </div>
+
+                <FormControl required>
+                  <FormLabel>Phone</FormLabel>
+                  <Input type="phone" placeholder="1xxxxxxxx" name="phone" />
+                </FormControl>
+
                 <Stack gap={4} sx={{ mt: 2 }}>
                   <Box
                     sx={{
@@ -229,13 +279,9 @@ export default function Login() {
                       alignItems: "center",
                     }}
                   >
-                    <Checkbox size="sm" label="Remember me" name="persistent" />
-                    <Link level="title-sm" href="#replace-with-a-link">
-                      Forgot your password?
-                    </Link>
                   </Box>
                   <Button type="submit" fullWidth loading={isLoading}>
-                    Sign in
+                    Signup
                   </Button>
                 </Stack>
               </form>

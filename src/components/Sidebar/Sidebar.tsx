@@ -12,6 +12,7 @@ import Sheet from "@mui/joy/Sheet";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import BrightnessAutoRoundedIcon from "@mui/icons-material/BrightnessAutoRounded";
 import { closeSidebar, ColorSchemeToggle } from "../../utils/common.util.tsx";
 import { useNavigate } from "react-router-dom";
@@ -115,19 +116,19 @@ export default function Sidebar() {
             <ListItemButton  onClick={() => navigate("/home/services")}>
               <DashboardRoundedIcon />
               <ListItemContent>
-                <Typography level="title-sm">Services</Typography>
+                <Typography level="title-sm">My Services</Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
 
-          {/*<ListItem>*/}
-          {/*  <ListItemButton onClick={() => navigate("/home/users")}>*/}
-          {/*    <DashboardRoundedIcon />*/}
-          {/*    <ListItemContent>*/}
-          {/*      <Typography level="title-sm">Users</Typography>*/}
-          {/*    </ListItemContent>*/}
-          {/*  </ListItemButton>*/}
-          {/*</ListItem>*/}
+          <ListItem>
+            <ListItemButton onClick={() => navigate("/home/profile")}>
+              <SupervisedUserCircleIcon />
+              <ListItemContent>
+                <Typography level="title-sm">Profile</Typography>
+              </ListItemContent>
+            </ListItemButton>
+          </ListItem>
 
           {/*<ListItem nested>*/}
           {/*    <Toggler*/}
