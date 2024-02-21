@@ -77,7 +77,8 @@ const CreateServiceForm: React.FC<Props> = ({ onSubmit, loading, service, showBa
                 {isTypesLoading ? (
                   <CircularProgress />
                 ) : (
-                  <Field id="type" name="type" onChange={(e:any, newValue:any) => setFieldValue("type", newValue)} as={Select} >
+                  <Field id="type" name="type" onChange={(e:any, newValue:any) => {setFieldValue("type", newValue)
+                    console.log(e);}} as={Select} >
                     {serviceTypes?.types.map((serviceType) => (
                       <Option key={serviceType.id}  value={serviceType.id}>
                         {serviceType.name}

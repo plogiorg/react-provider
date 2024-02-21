@@ -10,7 +10,7 @@ import Breadcrumbs from "@mui/joy/Breadcrumbs";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import Link from "@mui/joy/Link";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
-import { useCreateService, useServices } from "../../api";
+import { useCreateService } from "../../api";
 
 
 const myservices = [
@@ -28,13 +28,13 @@ const myservices = [
 
 export const ServiceComponent = () => {
   const [open, setOpen] = useState(false)
-  const {data:services, isLoading:isServiceLoading } = useServices()
+  // const {data:services, isLoading:isServiceLoading } = useServices()
   const {mutate:createService } = useCreateService()
   const [showBar, setShowBar] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
 
-  const handleFormSubmit = async (values) => {
+  const handleFormSubmit = async (values:any) => {
     setLoading(true)
     try{
       await createService(values)

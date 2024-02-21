@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Autocomplete from '@mui/joy/Autocomplete';
 import AutocompleteOption from '@mui/joy/AutocompleteOption';
 import AspectRatio from '@mui/joy/AspectRatio';
@@ -21,7 +20,10 @@ export default function CountrySelector(props: FormControlProps & {onCountrySele
         isOptionEqualToValue={(option, value) => option.code === value.code}
         defaultValue={{ code: 'SA', label: 'Saudi Arabia', phone: '996' }}
         options={countries}
-        onChange={(e,value) => onCountrySelect ? onCountrySelect({value}) : null}
+        onChange={(e,value) => {
+          onCountrySelect ? onCountrySelect({ value }) : null;
+          console.log(e);
+        }}
         renderOption={(optionProps, option) => (
           <AutocompleteOption {...optionProps}>
             <ListItemDecorator>
