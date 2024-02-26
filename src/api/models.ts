@@ -26,7 +26,7 @@ export type UserModel = WithId<{
 }>;
 
 export type ServiceType = WithId<{
-  name: string;
+  title: string;
   description: string;
   image: string;
 }>;

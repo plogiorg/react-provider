@@ -7,5 +7,6 @@ import CountrySelector from "./CountrySelector/CountrySelector"
 import EditorToolbar from "./EditorToolbar/EditorToolbar"
 import FileUpload from "./FileUpload/FileUpload"
 import DropZone from "./DropZone/DropZone"
+import PlacesAutoComplete from "./PlacesAutoComplete/PlacesAutoComplete"
 
-export { Button, Input, GlobalLoader, Sidebar, Header, CountrySelector, FileUpload, EditorToolbar, DropZone };
+export { Button, Input, GlobalLoader, Sidebar, Header, CountrySelector, FileUpload, EditorToolbar, DropZone, PlacesAutoComplete };

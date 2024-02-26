@@ -7,22 +7,31 @@ import { Select, Snackbar, Option } from "@mui/joy";
 import {  TickIcon } from "../../assets/icons";
 import { useServiceTypes } from "../../api";
 import CircularProgress from '@mui/joy/CircularProgress';
-
-
+import PlacesAutoComplete, { Place } from "../../components/PlacesAutoComplete/PlacesAutoComplete.tsx";
 
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
   description: Yup.string().required('Description is required'),
   image: Yup.string().required('Image URL is required'),
-  type: Yup.string().required('Type is required'),
+  serviceTypeId: Yup.string().required('Type is required'),
+  price: Yup.number().required('Price is required'),
+  lat: Yup.number().required('invalid address'),
+  lan: Yup.number().required('invalid address'),
+  city: Yup.string().required('invalid address'),
+  address: Yup.string().required("Address is Required")
 });
 
-const initialValues: any = {
+const initialValues:Yup.InferType<typeof validationSchema> = {
   title: '',
   description: '',
   image: '',
-  isActive: false,
+  address:"",
+  price: 0,
+  lat: 0,
+  lan: 0,
+  serviceTypeId: 1,
+  city: ""
 };
 
 interface Props {
@@ -35,11 +44,11 @@ interface Props {
 
 const CreateServiceForm: React.FC<Props> = ({ onSubmit, loading, service, showBar, barMessage }) => {
   const handleSubmit = (values: any,  { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
+    console.log({values});
     onSubmit(values);
     setSubmitting(false);
   };
   const {data:serviceTypes, isLoading:isTypesLoading} = useServiceTypes()
-
 
   return (
     <div>
@@ -72,22 +81,46 @@ const CreateServiceForm: React.FC<Props> = ({ onSubmit, loading, service, showBa
                 <ErrorMessage name="image" component="div" className="p-error" />
               </div>
 
+              <div className="p-field">
+                <label htmlFor="price">Price</label>
+                <Field id="price" type="number" name="price" as={Input} />
+                <ErrorMessage name="price" component="div" className="p-error" />
+              </div>
+
+              <div className="p-field">
+                <label htmlFor="address">Address</label>
+                <Field id="address" name="address"  component={PlacesAutoComplete}  onPlaceSelected={(place:Place) => {
+                  console.log({place});
+                  setFieldValue("lat", place.lat)
+                  setFieldValue("lan", place.lng)
+                  setFieldValue("city", place.city)
+                  setFieldValue("address", place.name)
+                }}  />
+                <ErrorMessage name="address" component="div" className="p-error" />
+                <ErrorMessage name="lat" component="div" className="p-error" />
+                <ErrorMessage name="lan" component="div" className="p-error" />
+                <ErrorMessage name="city" component="div" className="p-error" />
+              </div>
+
               <div className="my-2">
-                <label className={"mx-2"} htmlFor="type">Type</label>
+                <label className={"mx-2"} htmlFor="serviceTypeId">Type</label>
                 {isTypesLoading ? (
                   <CircularProgress />
                 ) : (
-                  <Field id="type" name="type" onChange={(e:any, newValue:any) => {setFieldValue("type", newValue)
-                    console.log(e);}} as={Select} >
+                  <Field id="serviceTypeId" name="serviceTypeId" onChange={(e: any, newValue: any) => {
+                    setFieldValue("serviceTypeId", newValue)
+                    console.log(e);
+                  }} as={Select}>
                     {serviceTypes?.types.map((serviceType) => (
-                      <Option key={serviceType.id}  value={serviceType.id}>
-                        {serviceType.name}
+                      <Option key={serviceType.id} value={serviceType.id}>
+                        {serviceType.title}
                       </Option>
                     ))}
                   </Field>)}
                 <ErrorMessage name="type" component="div" className="p-error" />
               </div>
-              <Button variant="solid" color="primary" loading={loading} startDecorator={<TickIcon />} disabled={isSubmitting} type="submit">Save</Button>
+              <Button variant="solid" color="primary" loading={loading} startDecorator={<TickIcon />}
+                      disabled={isSubmitting} type="submit">Save</Button>
             </div>
           </Form>
         )}

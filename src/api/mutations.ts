@@ -43,7 +43,8 @@ export const useCreateService = () => {
       return fetchUtil({
         url: "/v1/service",
         method: "POST",
-        body: data
+        body: data,
+        token: true
       });
     },
   });
