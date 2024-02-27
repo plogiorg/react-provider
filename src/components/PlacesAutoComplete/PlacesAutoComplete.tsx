@@ -76,8 +76,8 @@ const PlacesAutoComplete: React.FC<PlacesAutoCompleteProps> = ({onPlaceSelected}
         options={predictions}
         value={searchValue}
         getOptionLabel={(prediction:any) => prediction?.place_name ??  prediction}
-        onInputChange={(event, value) => handleChange(value!)}
-        onChange={(event, value) => handlePlaceSelected(value!)}
+        onInputChange={(_, value) => handleChange(value!)}
+        onChange={(_, value) => handlePlaceSelected(value!)}
       />
     </div>
   );
