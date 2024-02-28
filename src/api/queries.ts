@@ -35,12 +35,12 @@ export const useServiceTypes = () => {
 }
 
 
-export const useServices = () => {
+export const useProviderServices = () => {
   return useQuery<ServiceResponse>({
     queryKey: QUERY_KEYS.GET_SERVICES,
     queryFn: () => {
       return fetchUtil({
-        url: "/v1/service/types",
+        url: "/v1/service/provider/",
         method: "GET",
         token: true,
       });

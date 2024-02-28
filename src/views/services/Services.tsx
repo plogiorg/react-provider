@@ -10,7 +10,8 @@ import Breadcrumbs from "@mui/joy/Breadcrumbs";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import Link from "@mui/joy/Link";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
-import { useCreateService } from "../../api";
+import { useCreateService, useProviderServices } from "../../api";
+import { PlusIcon } from "../../assets/icons";
 
 
 const myservices = [
@@ -28,11 +29,14 @@ const myservices = [
 
 export const ServiceComponent = () => {
   const [open, setOpen] = useState(false)
-  // const {data:services, isLoading:isServiceLoading } = useServices()
+  const {data:services, isLoading:isServiceLoading } = useProviderServices()
   const {mutate:createService } = useCreateService()
   const [showBar, setShowBar] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
+
+  console.log({services});
+  console.log({isServiceLoading});
 
   const handleFormSubmit = async (values:any) => {
     setLoading(true)
@@ -47,7 +51,10 @@ export const ServiceComponent = () => {
       setShowBar(true)
     }
     setLoading(false)
-    setInterval(() => setShowBar(false), 1000)
+    setInterval(() => {
+      setShowBar(false);
+      setOpen(false)
+    }, 1000)
   }
 
 
@@ -84,6 +91,9 @@ export const ServiceComponent = () => {
           My Services
         </Typography>
       </Box>
+    <Box sx={{ px: { xs: 2, md: 6 } }}>
+      <Button variant="solid" color="primary" onClick={() => setOpen(true)} startDecorator={<PlusIcon />} type="submit">New</Button>
+    </Box>
     <div className={"p-5"}>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {myservices.map((service, index) => (
