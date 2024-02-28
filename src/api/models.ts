@@ -29,6 +29,9 @@ export type ServiceType = WithId<{
   title: string;
   description: string;
   image: string;
+  createdAt: Date,
+  updatedAt: Date,
+  isActive: true
 }>;
 
 
@@ -37,11 +40,20 @@ export type ServiceTypeReponse = {
   types : ServiceType[]
 }
 
-export type Service = {
-  id: number;
-  description: string;
-  price: number;
-}
+
+export type Service = WithId<{
+  createdAt: Date,
+  updatedAt: Date,
+  userId: string,
+  description: string,
+  price: number,
+  serviceTypeId: number,
+  serviceType: ServiceType,
+  lan: number,
+  lat: number,
+  city: string,
+  address: string
+}>
 
 export type ServiceResponse = {
   services : Service[]

@@ -14,19 +14,6 @@ import { useCreateService, useProviderServices } from "../../api";
 import { PlusIcon } from "../../assets/icons";
 
 
-const myservices = [
-  { name: "Car Washing", type: "Washing", description: "I Can Wash Cars", usage: 0 },
-  { name: "Test", type: "Test", description: "Test", usage: 0 },
-  { name: "Test", type: "Test", description: "Test", usage: 80 },
-  { name: "Test", type: "Test", description: "Test", usage: 0 },
-  { name: "Test", type: "Test", description: "Test", usage: 0 },
-  { name: "Test", type: "Test", description: "Test", usage: 0 },
-];
-
-
-
-
-
 export const ServiceComponent = () => {
   const [open, setOpen] = useState(false)
   const {data:services, isLoading:isServiceLoading } = useProviderServices()
@@ -96,14 +83,14 @@ export const ServiceComponent = () => {
     </Box>
     <div className={"p-5"}>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {myservices.map((service, index) => (
+        {isServiceLoading ? <CircularProgress/> : services?.services.map((service, index) => (
           <Card key={index}
                 onClick={() => setOpen(true)}
                 variant="solid" color="primary" invertedColors
                 className="bg-white shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105">
             <div>
               <CardContent orientation="horizontal">
-                <CircularProgress size="lg" determinate value={service.usage} className="mr-4">
+                <CircularProgress size="lg" determinate value={service.serviceTypeId} className="mr-4">
                   <SvgIcon>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -122,10 +109,10 @@ export const ServiceComponent = () => {
                 </CircularProgress>
                 <CardContent>
                   <Typography level="body-md">Name</Typography>
-                  <Typography level="h3">{service.name}</Typography>
+                  <Typography level="h3">{service.description}</Typography>
 
                   <Typography level="body-sm">Type</Typography>
-                  <Typography level="h2">{service.type}</Typography>
+                  <Typography level="h2">{service.serviceType.title}</Typography>
 
                   <Typography level="body-sm">Description</Typography>
                   <Typography level="h4">{service.description}</Typography>
