@@ -5,7 +5,7 @@ import { ServiceResponse, ServiceTypeReponse } from "./models.ts";
 const QUERY_KEYS = {
   GET_CURRENT_USER: ["user"],
   GET_SERVICE_TYPES: ["service-types"],
-  GET_SERVICES: ["services"],
+  GET_SERVICES: ["provider-services"],
 };
 
 export const useCurrentUser = () => {
@@ -40,7 +40,7 @@ export const useProviderServices = () => {
     queryKey: QUERY_KEYS.GET_SERVICES,
     queryFn: () => {
       return fetchUtil({
-        url: "/v1/service/provider/",
+        url: "/v1/service/provider/services",
         method: "GET",
         token: true,
       });
