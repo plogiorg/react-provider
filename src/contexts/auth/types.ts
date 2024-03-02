@@ -32,7 +32,6 @@ export type SetUserReducerAction = {
   type: "SET_USER";
   payload: {
     user: Record<string, any>;
-    dpId?: string;
   };
 };
 
