@@ -16,21 +16,18 @@ import { PlusIcon } from "../../assets/icons";
 
 export const ServiceComponent = () => {
   const [open, setOpen] = useState(false)
-  const {data:services, isLoading:isServiceLoading } = useProviderServices()
+  const {data:services, isLoading:isServiceLoading, refetch } = useProviderServices()
   const {mutate:createService } = useCreateService()
   const [showBar, setShowBar] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
-
-  console.log({services});
-  console.log({isServiceLoading});
-
   const handleFormSubmit = async (values:any) => {
     setLoading(true)
     try{
       await createService(values)
       setMessage("success")
       setShowBar(true)
+      refetch().then((res) => console.log({res}))
 
     }catch (e) {
       setLoading(false)

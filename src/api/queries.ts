@@ -38,6 +38,7 @@ export const useServiceTypes = () => {
 export const useProviderServices = () => {
   return useQuery<ServiceResponse>({
     queryKey: QUERY_KEYS.GET_SERVICES,
+    enabled: true,
     queryFn: () => {
       return fetchUtil({
         url: "/v1/service/provider/services",
