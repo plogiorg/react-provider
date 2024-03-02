@@ -69,16 +69,16 @@ function ColorSchemeToggle(props: IconButtonProps) {
 
 export default function Signup() {
   const { mutateAsync: signup, isLoading } = useSignup();
-  const [country, setCountry] = useState({ code: '', label: '', phone: '' });
+  const [country, setCountry] = useState({ code: '966', label: '', phone: '' });
   const navigate = useNavigate()
   const onSignupError = (error: NonNullable<unknown>) => {
     console.log(error);
   };
 
   const onSignupSuccess = (data: any) => {
-    localStorage.setItem(LOCALSTORAGE_KEYS.TOKEN, data.access_token);
+    localStorage.setItem(LOCALSTORAGE_KEYS.TOKEN, data?.access_token);
     // dispatchLogin(data)
-    navigate("/home/services")
+    navigate("/login")
     console.log("signed up..");
   };
   return (
