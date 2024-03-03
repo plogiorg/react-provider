@@ -39,7 +39,7 @@ export const useLogout = () => {
 
 export const useCreateService = () => {
   return useMutation({
-    onMutate: (data:CreateServiceRequest) => {
+    mutationFn: (data:CreateServiceRequest) => {
       return fetchUtil({
         url: "/v1/service",
         method: "POST",

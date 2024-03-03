@@ -1,7 +1,7 @@
 import { Card, CardActions, CardContent, CircularProgress, Modal, SvgIcon } from "@mui/joy";
 import Typography from "@mui/joy/Typography";
 import Button from "@mui/joy/Button";
-import { useState } from "react";
+import {  useState } from "react";
 import React from "react";
 import CreateServiceForm from "./Service.create.tsx";
 import Sheet from "@mui/joy/Sheet";
@@ -17,7 +17,7 @@ import { PlusIcon } from "../../assets/icons";
 export const ServiceComponent = () => {
   const [open, setOpen] = useState(false)
   const {data:services, isLoading:isServiceLoading, refetch } = useProviderServices()
-  const {mutate:createService } = useCreateService()
+  const {mutateAsync:createService } = useCreateService()
   const [showBar, setShowBar] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
@@ -27,9 +27,9 @@ export const ServiceComponent = () => {
       await createService(values)
       setMessage("success")
       setShowBar(true)
-      refetch().then((res) => console.log({res}))
-
+      await refetch()
     }catch (e) {
+      console.log({e});
       setLoading(false)
       setMessage("error")
       setShowBar(true)
@@ -40,7 +40,6 @@ export const ServiceComponent = () => {
       setOpen(false)
     }, 1000)
   }
-
 
   return <Box sx={{ flex: 1, width: '100%' }}>
       <Box sx={{ px: { xs: 2, md: 6 } }}>
