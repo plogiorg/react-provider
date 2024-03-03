@@ -167,7 +167,7 @@ export default function Signup() {
                 <Typography level="h3">Signup</Typography>
                 <Typography level="body-sm">
                   Already Have an Account?{" "}
-                  <Link href="#replace-with-a-link" level="title-sm">
+                  <Link href="/login" level="title-sm">
                     Sign In!
                   </Link>
                 </Typography>
