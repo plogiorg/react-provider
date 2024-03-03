@@ -10,6 +10,7 @@ export type SignupRequest = {
   username: string;
   password: string;
   email: string;
+  phone: string;
   firstName: string;
   lastName: string
   country: string;
