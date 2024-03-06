@@ -65,4 +65,5 @@ export type CreateServiceRequest = {
   description:string;
   name:string;
   price:number;
+  country:string;
 }

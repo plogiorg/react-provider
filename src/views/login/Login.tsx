@@ -214,7 +214,7 @@ export default function Login() {
                 }}
               >
                 <FormControl required>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Username</FormLabel>
                   <Input type="username" name="username" />
                 </FormControl>
                 <FormControl required>

@@ -7,7 +7,7 @@ import { Select, Snackbar, Option } from "@mui/joy";
 import {  TickIcon } from "../../assets/icons";
 import { useServiceTypes } from "../../api";
 import CircularProgress from '@mui/joy/CircularProgress';
-import PlacesAutoComplete, { Place } from "../../components/PlacesAutoComplete/PlacesAutoComplete.tsx";
+import { CountrySelector } from "../../components";
 
 
 const validationSchema = Yup.object().shape({
@@ -16,22 +16,22 @@ const validationSchema = Yup.object().shape({
   image: Yup.string().required('Image URL is required'),
   serviceTypeId: Yup.number().required('Type is required'),
   price: Yup.number().required('Price is required'),
-  lat: Yup.number().required('invalid address'),
-  lan: Yup.number().required('invalid address'),
-  city: Yup.string().required('invalid address'),
-  address: Yup.string().required("Address is Required")
+  // lat: Yup.number().required('invalid address'),
+  // lan: Yup.number().required('invalid address'),
+  // city: Yup.string().required('invalid address'),
+  country: Yup.string().required("Country is Required")
 });
 
 const initialValues:Yup.InferType<typeof validationSchema> = {
   title: '',
   description: '',
   image: '',
-  address:"",
+  country:"",
   price: 0,
-  lat: 0,
-  lan: 0,
+  // lat: 0,
+  // lan: 0,
   serviceTypeId: 1,
-  city: ""
+  // city: ""
 };
 
 interface Props {
@@ -88,19 +88,25 @@ const CreateServiceForm: React.FC<Props> = ({ onSubmit, loading, service, showBa
               </div>
 
               <div className="p-field">
-                <label htmlFor="address">Address</label>
-                <Field id="address" name="address"  component={PlacesAutoComplete}  onPlaceSelected={(place:Place) => {
-                  console.log({place});
-                  setFieldValue("lat", place.lat)
-                  setFieldValue("lan", place.lng)
-                  setFieldValue("city", place.city)
-                  setFieldValue("address", place.name)
-                }}  />
-                <ErrorMessage name="address" component="div" className="p-error" />
-                <ErrorMessage name="lat" component="div" className="p-error" />
-                <ErrorMessage name="lan" component="div" className="p-error" />
-                <ErrorMessage name="city" component="div" className="p-error" />
+                <CountrySelector key="country" onCountrySelect={(country) => {
+                  setFieldValue("country",country.value)
+                }} />
               </div>
+
+              {/*<div className="p-field">*/}
+              {/*  <label htmlFor="address">Address</label>*/}
+              {/*  <Field id="address" name="address"  component={PlacesAutoComplete}  onPlaceSelected={(place:Place) => {*/}
+              {/*    console.log({place});*/}
+              {/*    setFieldValue("lat", place.lat)*/}
+              {/*    setFieldValue("lan", place.lng)*/}
+              {/*    setFieldValue("city", place.city)*/}
+              {/*    setFieldValue("address", place.name)*/}
+              {/*  }}  />*/}
+              {/*  <ErrorMessage name="address" component="div" className="p-error" />*/}
+              {/*  <ErrorMessage name="lat" component="div" className="p-error" />*/}
+              {/*  <ErrorMessage name="lan" component="div" className="p-error" />*/}
+              {/*  <ErrorMessage name="city" component="div" className="p-error" />*/}
+              {/*</div>*/}
 
               <div className="my-2">
                 <label className={"mx-2"} htmlFor="serviceTypeId">Type</label>
