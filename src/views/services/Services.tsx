@@ -35,7 +35,7 @@ export const ServiceComponent = () => {
       setShowBar(true)
     }
     setLoading(false)
-    setInterval(() => {
+    setTimeout(() => {
       setShowBar(false);
       setOpen(false)
     }, 1000)

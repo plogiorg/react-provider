@@ -26,7 +26,7 @@ const initialValues:Yup.InferType<typeof validationSchema> = {
   title: '',
   description: '',
   image: '',
-  country:"",
+  country:"SA",
   price: 0,
   // lat: 0,
   // lan: 0,
@@ -49,13 +49,12 @@ const CreateServiceForm: React.FC<Props> = ({ onSubmit, loading, service, showBa
     setSubmitting(false);
   };
   const {data:serviceTypes, isLoading:isTypesLoading} = useServiceTypes()
-
   return (
     <div>
       {<Snackbar open={showBar}>{barMessage}</Snackbar>}
       <h1>Create Service</h1>
       <Formik
-        initialValues={service || initialValues}
+        initialValues={service?.id ? service : initialValues}
         validationSchema={validationSchema}
         enableReinitialize={true}
         onSubmit={handleSubmit}
@@ -88,9 +87,10 @@ const CreateServiceForm: React.FC<Props> = ({ onSubmit, loading, service, showBa
               </div>
 
               <div className="p-field">
-                <CountrySelector key="country" onCountrySelect={(country) => {
-                  setFieldValue("country",country.value)
+                <CountrySelector key="country" onCountrySelect={async (country) => {
+                  await setFieldValue("country", country.value.code)
                 }} />
+                <ErrorMessage name="country" component="div" className="p-error" />
               </div>
 
               {/*<div className="p-field">*/}
