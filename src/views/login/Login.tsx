@@ -15,11 +15,11 @@ import Typography from "@mui/joy/Typography";
 import Stack from "@mui/joy/Stack";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
-import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import { useLogin } from "../../api";
 import { LOCALSTORAGE_KEYS } from "../../constants";
 import { useAuth } from "../../contexts";
 import { useNavigate } from "react-router-dom";
+import logo from '../../assets/logo.png';
 // import GoogleIcon from '../../assets/react.svg';
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -129,9 +129,9 @@ export default function Login() {
           >
             <Box sx={{ gap: 2, display: "flex", alignItems: "center" }}>
               <IconButton variant="soft" color="primary" size="sm">
-                <BadgeRoundedIcon />
+                <img src={logo} alt={logo} className="w-[5vh]"/>
               </IconButton>
-              <Typography level="title-lg">Company logo</Typography>
+              <Typography level="title-lg">PLogi</Typography>
             </Box>
             <ColorSchemeToggle />
           </Box>
@@ -243,7 +243,7 @@ export default function Login() {
           </Box>
           <Box component="footer" sx={{ py: 3 }}>
             <Typography level="body-xs" textAlign="center">
-              © Your company {new Date().getFullYear()}
+              © PLogi {new Date().getFullYear()}
             </Typography>
           </Box>
         </Box>
