@@ -13,7 +13,7 @@ import { CountrySelector } from "../../components";
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
   description: Yup.string().required('Description is required'),
-  image: Yup.string().required('Image URL is required'),
+  // image: Yup.string().required('Image URL is required'),
   serviceTypeId: Yup.number().required('Type is required'),
   price: Yup.number().required('Price is required'),
   // lat: Yup.number().required('invalid address'),
@@ -25,7 +25,6 @@ const validationSchema = Yup.object().shape({
 const initialValues:Yup.InferType<typeof validationSchema> = {
   title: '',
   description: '',
-  image: '',
   country:"SA",
   price: 0,
   // lat: 0,
@@ -74,11 +73,11 @@ const CreateServiceForm: React.FC<Props> = ({ onSubmit, loading, service, showBa
                 <ErrorMessage name="description" component="div" className="p-error" />
               </div>
 
-              <div className="p-field">
-                <label htmlFor="image">Image URL</label>
-                <Field id="image" name="image" as={Input} />
-                <ErrorMessage name="image" component="div" className="p-error" />
-              </div>
+              {/*<div className="p-field">*/}
+              {/*  <label htmlFor="image">Image URL</label>*/}
+              {/*  <Field id="image" name="image" as={Input} />*/}
+              {/*  <ErrorMessage name="image" component="div" className="p-error" />*/}
+              {/*</div>*/}
 
               <div className="p-field">
                 <label htmlFor="price">Price</label>
