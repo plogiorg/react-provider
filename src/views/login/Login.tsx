@@ -129,7 +129,7 @@ export default function Login() {
           >
             <Box sx={{ gap: 2, display: "flex", alignItems: "center" }}>
               <IconButton variant="soft" color="primary" size="sm">
-                <img src={logo} alt={logo} className="w-[5vh]"/>
+                <img src={logo} alt={logo} style={{width:"8vh"}}/>
               </IconButton>
               <Typography level="title-lg">PLogi</Typography>
             </Box>
