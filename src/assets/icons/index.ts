@@ -35,6 +35,7 @@ import LockIcon from "./lock.svg?react";
 import SearchIcon from "./search_glass.svg?react";
 import CircleIcon from "./circle.svg?react";
 import MagnifyGlassIcon from "./magnify_glass.svg?react";
+import PiNetworkIcon from "./pi_network.svg?react"
 
 export {
   ArrowLeftIcon,
@@ -74,4 +75,5 @@ export {
   SearchIcon,
   CircleIcon,
   MagnifyGlassIcon,
+  PiNetworkIcon
 };

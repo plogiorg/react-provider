@@ -20,7 +20,9 @@ import { LOCALSTORAGE_KEYS } from "../../constants";
 import { useAuth } from "../../contexts";
 import { useNavigate } from "react-router-dom";
 import logo from '../../assets/logo.png';
-// import GoogleIcon from '../../assets/react.svg';
+import { Pi } from '@pinetwork-js/sdk';
+import { APIPayment } from '@pinetwork-js/api-typing';
+import { PiNetworkIcon } from "../../assets/icons";
 
 interface FormElements extends HTMLFormControlsCollection {
   username: HTMLInputElement;
@@ -31,6 +33,12 @@ interface SignInFormElement extends HTMLFormElement {
   readonly elements: FormElements;
 }
 
+const onIncompletePayments = (payment:APIPayment) => {
+  console.log({payment});
+}
+const handlePiAuthenticate = async () => {
+  await Pi.authenticate(["username", "payments"], onIncompletePayments)
+}
 function ColorSchemeToggle(props: IconButtonProps) {
   const { onClick, ...other } = props;
   const { mode, setMode } = useColorScheme();
@@ -169,12 +177,13 @@ export default function Login() {
                 </Typography>
               </Stack>
               <Button
+                onClick={() => handlePiAuthenticate()}
                 variant="soft"
                 color="neutral"
                 fullWidth
-                // startDecorator={<GoogleIcon />}
+                startDecorator={<PiNetworkIcon className="fill-yellow-500" />}
               >
-                Continue with Google
+                Continue with Pi
               </Button>
             </Stack>
             <Divider
