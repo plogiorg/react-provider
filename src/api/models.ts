@@ -6,6 +6,17 @@ export type LoginRequest = {
   type:string
 };
 
+export type PiUser = {
+  uid:string;
+  username?:string;
+}
+
+export type PiLoginRequest = {
+  accessToken: string;
+  type: string
+  user: PiUser;
+}
+
 export type SignupRequest = {
   username: string;
   password: string;

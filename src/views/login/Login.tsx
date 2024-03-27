@@ -15,7 +15,7 @@ import Typography from "@mui/joy/Typography";
 import Stack from "@mui/joy/Stack";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
-import { useLogin } from "../../api";
+import { useLogin, usePiLogin } from "../../api";
 import { LOCALSTORAGE_KEYS } from "../../constants";
 import { useAuth } from "../../contexts";
 import { useNavigate } from "react-router-dom";
@@ -36,9 +36,7 @@ interface SignInFormElement extends HTMLFormElement {
 const onIncompletePayments = (payment:APIPayment) => {
   console.log({payment});
 }
-const handlePiAuthenticate = async () => {
-  await Pi.authenticate(["username", "payments"], onIncompletePayments)
-}
+
 function ColorSchemeToggle(props: IconButtonProps) {
   const { onClick, ...other } = props;
   const { mode, setMode } = useColorScheme();
@@ -49,6 +47,7 @@ function ColorSchemeToggle(props: IconButtonProps) {
   if (!mounted) {
     return <IconButton size="sm" variant="outlined" color="neutral" disabled />;
   }
+
   return (
     <IconButton
       id="toggle-mode"
@@ -74,11 +73,20 @@ function ColorSchemeToggle(props: IconButtonProps) {
 export default function Login() {
   const { mutateAsync: login, isLoading } = useLogin();
   const { login: dispatchLogin } = useAuth();
+  const { mutateAsync:piLogin, isLoading:piLoginLoading } = usePiLogin();
+
   const navigate = useNavigate()
   const onLoginError = (error: NonNullable<unknown>) => {
     console.log(error);
   };
 
+  const handlePiAuthenticate = async () => {
+    const authResult = await Pi.authenticate(["username", "payments"], onIncompletePayments)
+    piLogin({accessToken: authResult.accessToken, type:"PROVIDER", user:authResult.user}).then((data) =>{
+      onLoginSuccess(data)
+    })
+
+  }
   const onLoginSuccess = (data: any) => {
     localStorage.setItem(LOCALSTORAGE_KEYS.TOKEN, data.access_token);
     dispatchLogin(data)
@@ -180,6 +188,7 @@ export default function Login() {
                 onClick={() => handlePiAuthenticate()}
                 variant="soft"
                 color="neutral"
+                loading={piLoginLoading}
                 fullWidth
                 startDecorator={<PiNetworkIcon className="fill-yellow-500" />}
               >
