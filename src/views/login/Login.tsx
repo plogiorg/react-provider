@@ -81,7 +81,7 @@ export default function Login() {
   };
 
   const handlePiAuthenticate = async () => {
-    console.log("loging in ...");
+    console.log("logging in ...");
     const authResult = await Pi.authenticate(["username", "payments"], onIncompletePayments)
     piLogin({accessToken: authResult.accessToken, type:"provider", user:authResult.user}).then((data) =>{
       onLoginSuccess({ ...data, authType:AuthType.PI })
