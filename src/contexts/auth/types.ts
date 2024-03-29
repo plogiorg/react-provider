@@ -1,4 +1,4 @@
-import { LoginResponse } from "../../api";
+import { AuthType, LoginResponse } from "../../api";
 
 type TODO = any;
 
@@ -6,6 +6,7 @@ export type AuthContextState = {
   isLoading: boolean;
   token: string | null;
   isLoggedIn: boolean;
+  authType:AuthType
   user: Record<string, object> | null;
 };
 
@@ -32,6 +33,7 @@ export type SetUserReducerAction = {
   type: "SET_USER";
   payload: {
     user: Record<string, any>;
+    authType: AuthType
   };
 };
 

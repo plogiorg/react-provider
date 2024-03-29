@@ -1,3 +1,4 @@
 export const LOCALSTORAGE_KEYS = {
-  TOKEN: "cx__token",
+  TOKEN: "token",
+  AUTH_TYPE: "auth_type",
 };

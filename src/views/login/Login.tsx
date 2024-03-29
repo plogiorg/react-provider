@@ -15,7 +15,7 @@ import Typography from "@mui/joy/Typography";
 import Stack from "@mui/joy/Stack";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
-import { useLogin, usePiLogin } from "../../api";
+import { AuthType, useLogin, usePiLogin } from "../../api";
 import { LOCALSTORAGE_KEYS } from "../../constants";
 import { useAuth } from "../../contexts";
 import { useNavigate } from "react-router-dom";
@@ -84,7 +84,8 @@ export default function Login() {
     console.log("loging in ...");
     const authResult = await Pi.authenticate(["username", "payments"], onIncompletePayments)
     piLogin({accessToken: authResult.accessToken, type:"provider", user:authResult.user}).then((data) =>{
-      onLoginSuccess(data)
+      onLoginSuccess({ ...data, authType:AuthType.PI })
+      localStorage.setItem(LOCALSTORAGE_KEYS.AUTH_TYPE, AuthType.PI)
     })
 
   }
