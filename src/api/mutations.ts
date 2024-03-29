@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { CreateServiceRequest, LoginRequest, PiLoginRequest, SignupRequest } from ".";
+import { AuthType, CreateServiceRequest, LoginRequest, PiLoginRequest, SignupRequest } from ".";
 import { fetchUtil } from "../utils/fetch.util";
 
 export const useLogin = () => {
@@ -21,6 +21,7 @@ export const usePiLogin = () => {
         url: "/v1/auth/pi/login",
         body: data,
         method: "POST",
+        authType: AuthType.PI
       });
     },
   });

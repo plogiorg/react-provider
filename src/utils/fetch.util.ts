@@ -1,10 +1,12 @@
 import Config from "../config";
 import { LOCALSTORAGE_KEYS } from "../constants";
+import { AuthType } from "../api";
 
 type FetchUtilOptions = {
   url: string;
   method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   body?: any;
+  authType?:AuthType;
   queryParams?: Record<string, any>;
   token?: boolean;
   media?: boolean;
@@ -20,6 +22,9 @@ export function fetchUtil(options: FetchUtilOptions): Promise<any> {
   if (!media) {
     headers["Content-Type"] = "application/json";
     headers["x-user-type"] = "provider";
+
+    if(options.authType) headers["x-auth-type"] = options.authType
+
     if (token) {
       const sessionToken = localStorage.getItem(LOCALSTORAGE_KEYS.TOKEN);
       headers.Authorization = `Bearer ${sessionToken}`;

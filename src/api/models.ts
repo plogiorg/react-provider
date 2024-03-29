@@ -11,6 +11,11 @@ export type PiUser = {
   username?:string;
 }
 
+export enum AuthType {
+  PI = 'pi',
+  STANDARD = 'standard',
+}
+
 export type PiLoginRequest = {
   accessToken: string;
   type: string
