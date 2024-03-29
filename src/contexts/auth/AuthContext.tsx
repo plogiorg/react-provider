@@ -1,22 +1,14 @@
-import {
-  FC,
-  ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-} from "react";
+import { createContext, FC, ReactNode, useCallback, useContext, useEffect, useMemo, useReducer } from "react";
 import { AuthContextType } from "./types";
 import AuthReducer from "./reducer";
-import { LoginResponse, useCurrentUser } from "../../api";
+import { AuthType, LoginResponse, useCurrentUser } from "../../api";
 import { GlobalLoader } from "../../components";
 
 const AuthContextInitialValues: AuthContextType = {
   isLoading: true,
   token: null,
   isLoggedIn: false,
+  authType: AuthType.STANDARD,
   user: null,
   login: (data?:LoginResponse) => {console.log(data);},
   logout: () => {},

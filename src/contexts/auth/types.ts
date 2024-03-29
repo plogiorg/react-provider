@@ -6,7 +6,7 @@ export type AuthContextState = {
   isLoading: boolean;
   token: string | null;
   isLoggedIn: boolean;
-  authType:AuthType
+  authType?:AuthType
   user: Record<string, object> | null;
 };
 
@@ -33,7 +33,7 @@ export type SetUserReducerAction = {
   type: "SET_USER";
   payload: {
     user: Record<string, any>;
-    authType: AuthType
+    authType?: AuthType
   };
 };
 
