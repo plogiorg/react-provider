@@ -1,6 +1,7 @@
 import { useMutation } from "react-query";
 import { CreateServiceRequest, LoginRequest, PiLoginRequest, SignupRequest } from ".";
 import { fetchUtil } from "../utils/fetch.util";
+import { APIPayment } from "@pinetwork-js/api-typing";
 
 export const useLogin = () => {
   return useMutation({
@@ -54,6 +55,58 @@ export const useCreateService = () => {
     mutationFn: (data:CreateServiceRequest) => {
       return fetchUtil({
         url: "/v1/service",
+        method: "POST",
+        body: data,
+        token: true
+      });
+    },
+  });
+};
+
+export const useIncompletePayment = () => {
+  return useMutation({
+    mutationFn: (data:{payment: APIPayment}) => {
+      return fetchUtil({
+        url: "/v1/", //TODO: implement this endpoint
+        method: "POST",
+        body: data,
+        token: true
+      });
+    },
+  });
+};
+
+export const useApprovePayment = () => {
+  return useMutation({
+    mutationFn: (data:{paymentId:string}) => {
+      return fetchUtil({
+        url: "/v1/", //TODO: implement this endpoint
+        method: "POST",
+        body: data,
+        token: true
+      });
+    },
+  });
+};
+
+export const useCompletePayment = () => {
+  return useMutation({
+    mutationFn: (data: { paymentId: string, txid: string }) => {
+      return fetchUtil({
+        url: "/v1/", //TODO: implement this endpoint
+        method: "POST",
+        body: data,
+        token: true
+      });
+    },
+  });
+};
+
+export const useCancelPayment = () => {
+  return useMutation({
+    mutationFn: (data: { paymentId: string }) => {
+      return fetchUtil({
+        url: "/v1/", //TODO: implement this endpoint
         method: "POST",
         body: data,
         token: true

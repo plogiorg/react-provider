@@ -10,17 +10,72 @@ import Breadcrumbs from "@mui/joy/Breadcrumbs";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import Link from "@mui/joy/Link";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
-import { useCreateService, useProviderServices } from "../../api";
+import {
+  useApprovePayment,
+  useCancelPayment,
+  useCompletePayment,
+  useCreateService,
+  useProviderServices,
+} from "../../api";
 import { PlusIcon } from "../../assets/icons";
+import { Pi } from '@pinetwork-js/sdk';
+import { APIPayment } from '@pinetwork-js/api-typing';
+
+
+type PaymentMetadata = {
+  serviceId: string,
+  status:string
+};
+
 
 
 export const ServiceComponent = () => {
   const [open, setOpen] = useState(false)
   const {data:services, isLoading:isServiceLoading, refetch } = useProviderServices()
   const {mutateAsync:createService } = useCreateService()
+  const {mutateAsync:approvePayment } = useApprovePayment()
+  const {mutateAsync:complatePayment } = useCompletePayment()
+  const {mutateAsync:cancelPayment } = useCancelPayment()
   const [showBar, setShowBar] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
+
+
+  const promoteService = async (memo: string, amount: number, paymentMetadata: Partial<PaymentMetadata>) => {
+    const uid = "21"
+    const paymentData = { amount, memo, uid, metadata: paymentMetadata };
+    const callbacks = {
+      onReadyForServerApproval,
+      onReadyForServerCompletion,
+      onCancel,
+      onError
+    };
+    const payment = Pi.createPayment(paymentData, callbacks);
+    await payment.runPaymentFlow()
+    console.log(payment);
+  }
+
+  const onReadyForServerApproval = (paymentId: string) => {
+    console.log("onReadyForServerApproval", paymentId);
+    approvePayment({paymentId}).then((data) => console.log(data))
+  }
+
+  const onReadyForServerCompletion = (paymentId: string, txid: string) => {
+    console.log("onReadyForServerCompletion", paymentId, txid);
+    complatePayment({paymentId, txid}).then((data) => console.log({data}))
+  }
+
+  const onCancel = (paymentId: string) => {
+    console.log("onCancel", paymentId);
+    cancelPayment({paymentId}).then((data) => console.log(data))
+  }
+
+  const onError = (error: Error, payment?: APIPayment) => {
+    console.log("onError", error);
+    if (payment) {
+      console.log(payment);
+    }
+  }
   const handleFormSubmit = async (values:any) => {
     setLoading(true)
     try{
@@ -118,7 +173,7 @@ export const ServiceComponent = () => {
                 <Button variant="soft" size="sm">
                   Disable
                 </Button>
-                <Button variant="solid" size="sm">
+                <Button variant="solid" size="sm" onClick={() => promoteService(service.description, 0.1, {serviceId: service.id })}>
                   Promote
                 </Button>
               </CardActions>
