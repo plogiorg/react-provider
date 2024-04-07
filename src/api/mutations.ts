@@ -67,9 +67,9 @@ export const useIncompletePayment = () => {
   return useMutation({
     mutationFn: (data:{payment: APIPayment}) => {
       return fetchUtil({
-        url: "/v1/", //TODO: implement this endpoint
+        url: `/v1/service/order/payment/incomplete`,
         method: "POST",
-        body: data,
+        body: data.payment,
         token: true
       });
     },
@@ -80,7 +80,7 @@ export const useApprovePayment = () => {
   return useMutation({
     mutationFn: (data:{paymentId:string}) => {
       return fetchUtil({
-        url: "/v1/", //TODO: implement this endpoint
+        url:`/v1/service/order/payment/approve`,
         method: "POST",
         body: data,
         token: true
@@ -91,9 +91,9 @@ export const useApprovePayment = () => {
 
 export const useCompletePayment = () => {
   return useMutation({
-    mutationFn: (data: { paymentId: string, txid: string }) => {
+    mutationFn: (data: { paymentId: string, transactionId: string }) => {
       return fetchUtil({
-        url: "/v1/", //TODO: implement this endpoint
+        url: `/v1/service/order/payment/complete`,
         method: "POST",
         body: data,
         token: true
@@ -106,7 +106,7 @@ export const useCancelPayment = () => {
   return useMutation({
     mutationFn: (data: { paymentId: string }) => {
       return fetchUtil({
-        url: "/v1/", //TODO: implement this endpoint
+        url: `/v1/service/order/payment/cancel`,
         method: "POST",
         body: data,
         token: true

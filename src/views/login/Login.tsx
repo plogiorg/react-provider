@@ -15,7 +15,7 @@ import Typography from "@mui/joy/Typography";
 import Stack from "@mui/joy/Stack";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
-import { AuthType, useLogin, usePiLogin } from "../../api";
+import { AuthType, useIncompletePayment, useLogin, usePiLogin } from "../../api";
 import { LOCALSTORAGE_KEYS } from "../../constants";
 import { useAuth } from "../../contexts";
 import { useNavigate } from "react-router-dom";
@@ -33,9 +33,6 @@ interface SignInFormElement extends HTMLFormElement {
   readonly elements: FormElements;
 }
 
-const onIncompletePayments = (payment:APIPayment) => {
-  console.log({payment});
-}
 
 function ColorSchemeToggle(props: IconButtonProps) {
   const { onClick, ...other } = props;
@@ -74,11 +71,16 @@ export default function Login() {
   const { mutateAsync: login, isLoading } = useLogin();
   const { login: dispatchLogin } = useAuth();
   const { mutateAsync:piLogin, isLoading:piLoginLoading } = usePiLogin();
+  const {mutateAsync:incompletePayment } = useIncompletePayment()
 
   const navigate = useNavigate()
   const onLoginError = (error: NonNullable<unknown>) => {
     console.log(error);
   };
+  const onIncompletePayments = (payment:APIPayment) => {
+    console.log({payment});
+    incompletePayment({payment}).then((data) => console.log({data}))
+  }
 
   const handlePiAuthenticate = async () => {
     console.log("logging in ...");

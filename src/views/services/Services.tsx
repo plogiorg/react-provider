@@ -34,8 +34,9 @@ export const ServiceComponent = () => {
   const {data:services, isLoading:isServiceLoading, refetch } = useProviderServices()
   const {mutateAsync:createService } = useCreateService()
   const {mutateAsync:approvePayment } = useApprovePayment()
-  const {mutateAsync:complatePayment } = useCompletePayment()
+  const {mutateAsync:completePayment } = useCompletePayment()
   const {mutateAsync:cancelPayment } = useCancelPayment()
+
   const [showBar, setShowBar] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
@@ -62,7 +63,7 @@ export const ServiceComponent = () => {
 
   const onReadyForServerCompletion = (paymentId: string, txid: string) => {
     console.log("onReadyForServerCompletion", paymentId, txid);
-    complatePayment({paymentId, txid}).then((data) => console.log({data}))
+    completePayment({paymentId, transactionId:txid}).then((data) => console.log({data}))
   }
 
   const onCancel = (paymentId: string) => {
