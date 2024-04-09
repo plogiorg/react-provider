@@ -63,6 +63,7 @@ export type Service = WithId<{
   updatedAt: Date,
   userId: string,
   description: string,
+  isPromoted: boolean;
   price: number,
   serviceTypeId: number,
   country:string;
