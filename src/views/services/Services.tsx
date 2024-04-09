@@ -174,7 +174,10 @@ export const ServiceComponent = () => {
                 <Button variant="soft" size="sm">
                   Disable
                 </Button>
-                <Button variant="solid" size="sm" onClick={() => promoteService(service.description, 0.1, {serviceId: service.id })}>
+                <Button variant="solid" size="sm" onClick={(e) => {
+                  e.stopPropagation();
+                  promoteService(service.description, 0.1, {serviceId: service.id })
+                }}>
                   Promote
                 </Button>
               </CardActions>
