@@ -139,7 +139,7 @@ export const ServiceComponent = () => {
           <Card key={index}
                 onClick={() => setOpen(true)}
                 variant="solid" color="primary" invertedColors
-                className="bg-white shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105">
+                className="bg-white shadow-md max-h-[40vh] rounded-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105">
             <div>
               <CardContent orientation="horizontal">
                 <CircularProgress size="lg" determinate value={service.serviceTypeId} className="mr-4">
