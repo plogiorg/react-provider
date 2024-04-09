@@ -40,7 +40,7 @@ export const ServiceComponent = () => {
   const [showBar, setShowBar] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
-
+const [selectedService, setSelectedService] = useState(Service| undefined)
 
   const promoteService = async (memo: string, amount: number, paymentMetadata: Partial<PaymentMetadata>) => {
     const uid = "21"
@@ -137,7 +137,11 @@ export const ServiceComponent = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {isServiceLoading ? <CircularProgress/> : services?.services.map((service, index) => (
           <Card key={index}
-                onClick={() => setOpen(true)}
+                onClick={() => {
+                  setOpen(true)
+                  setSelectedService(service)
+                }
+          }
                 variant="solid" color="primary" invertedColors
                 className="bg-white shadow-md max-h-[40vh] rounded-md overflow-hidden transition duration-300 ease-in-out transform hover:scale-105">
             <div>
@@ -192,7 +196,10 @@ export const ServiceComponent = () => {
           aria-labelledby="modal-title"
           aria-describedby="modal-desc"
           open={open}
-          onClose={() => setOpen(false)}
+          onClose={() => {
+            setSelectedService(undefined)
+            setOpen(false)
+          }}
           sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
         >
           <Sheet
@@ -204,7 +211,7 @@ export const ServiceComponent = () => {
               boxShadow: 'lg',
             }}
           >
-            <CreateServiceForm service={{}} loading={loading} showBar={showBar} barMessage={message} onSubmit={handleFormSubmit}></CreateServiceForm>
+            <CreateServiceForm service={selectedService} loading={loading} showBar={showBar} barMessage={message} onSubmit={handleFormSubmit}></CreateServiceForm>
           </Sheet>
         </Modal>
       </React.Fragment>
