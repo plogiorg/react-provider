@@ -160,14 +160,14 @@ export const ServiceComponent = () => {
                   </SvgIcon>
                 </CircularProgress>
                 <CardContent>
-                  <Typography level="body-md">Name</Typography>
-                  <Typography level="h3">{service.description}</Typography>
+                  <Typography level="body-md">Country</Typography>
+                  <Typography level="h3">{service.country}</Typography>
 
                   <Typography level="body-sm">Type</Typography>
                   <Typography level="h2">{service.serviceType.title}</Typography>
 
                   <Typography level="body-sm">Description</Typography>
-                  <Typography level="h4">{service.description}</Typography>
+                  <Typography className="max-h-[5vh] overflow-hidden" level="body-sm">{service.description}</Typography>
                 </CardContent>
               </CardContent>
               <CardActions>

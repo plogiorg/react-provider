@@ -65,6 +65,7 @@ export type Service = WithId<{
   description: string,
   price: number,
   serviceTypeId: number,
+  country:string;
   serviceType: ServiceType,
   lan: number,
   lat: number,
