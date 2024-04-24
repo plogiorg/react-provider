@@ -59,17 +59,26 @@ const [selectedService, setSelectedService] = useState<Service | undefined>()
 
   const onReadyForServerApproval = (paymentId: string) => {
     console.log("onReadyForServerApproval", paymentId);
-    approvePayment({paymentId}).then((data) => console.log(data))
+    return approvePayment({paymentId}).then((data) => {
+      console.log(data)
+      return
+    })
   }
 
   const onReadyForServerCompletion = (paymentId: string, txid: string) => {
     console.log("onReadyForServerCompletion", paymentId, txid);
-    completePayment({paymentId, transactionId:txid}).then((data) => console.log({data}))
+    return completePayment({paymentId, transactionId:txid}).then((data) => {
+      console.log(data)
+      return;
+    })
   }
 
   const onCancel = (paymentId: string) => {
     console.log("onCancel", paymentId);
-    cancelPayment({paymentId}).then((data) => console.log(data))
+    return cancelPayment({paymentId}).then((data) => {
+      console.log(data);
+      return
+    })
   }
 
   const onError = (error: Error, payment?: APIPayment) => {
@@ -77,6 +86,7 @@ const [selectedService, setSelectedService] = useState<Service | undefined>()
     if (payment) {
       console.log(payment);
     }
+    return
   }
   const handleFormSubmit = async (values:any) => {
     setLoading(true)
