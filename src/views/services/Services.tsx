@@ -53,7 +53,7 @@ const [selectedService, setSelectedService] = useState<Service | undefined>()
       onError
     };
     const payment = Pi.createPayment(paymentData, callbacks);
-    await payment.runPaymentFlow()
+    // await payment.runPaymentFlow()
     console.log(payment);
   }
 
