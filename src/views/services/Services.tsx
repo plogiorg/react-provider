@@ -43,7 +43,7 @@ export const ServiceComponent = () => {
 const [selectedService, setSelectedService] = useState(Service| undefined)
 
   const promoteService = async (memo: string, amount: number, paymentMetadata: Partial<PaymentMetadata>) => {
-    const uid = "21"
+    const uid = "9a06a60c-e920-4400-93eb-63c1ba325b1e"
     const paymentData = { amount, memo, uid, metadata: paymentMetadata };
     const callbacks = {
       onReadyForServerApproval,
