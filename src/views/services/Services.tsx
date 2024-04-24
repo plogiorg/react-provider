@@ -11,6 +11,7 @@ import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import Link from "@mui/joy/Link";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import {
+  Service,
   useApprovePayment,
   useCancelPayment,
   useCompletePayment,
@@ -40,7 +41,7 @@ export const ServiceComponent = () => {
   const [showBar, setShowBar] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
-const [selectedService, setSelectedService] = useState(Service| undefined)
+const [selectedService, setSelectedService] = useState<Service | undefined>()
 
   const promoteService = async (memo: string, amount: number, paymentMetadata: Partial<PaymentMetadata>) => {
     const uid = "9a06a60c-e920-4400-93eb-63c1ba325b1e"
