@@ -29,8 +29,9 @@ export const AuthContextProvider: FC<Props> = ({ children }) => {
       try {
         dispatch({ type: "SET_LOADING", payload: { isLoading: true } });
         const { data: userResponse } = await getCurrentUser()
+        console.log({userResponse})
         if (userResponse?.sub || userResponse.uid) {
-          console.log{userResponse}
+          console.log({userResponse})
           dispatch({
             type: "SET_USER",
             payload: {

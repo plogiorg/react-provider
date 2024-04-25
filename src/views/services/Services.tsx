@@ -54,6 +54,7 @@ export const ServiceComponent = () => {
       onCancel,
       onError
     };
+    console.log({uid})
     const payment = Pi.createPayment(paymentData, callbacks);
     console.log(payment);
   }
