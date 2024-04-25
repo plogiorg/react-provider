@@ -11,11 +11,14 @@ import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import Link from "@mui/joy/Link";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import {
+  AuthType,
   Service,
   useApprovePayment,
   useCancelPayment,
   useCompletePayment,
   useCreateService,
+  useIncompletePayment,
+  usePiLogin,
   useProviderServices,
 } from "../../api";
 import { PlusIcon } from "../../assets/icons";
@@ -23,6 +26,7 @@ import { Pi } from '@pinetwork-js/sdk';
 import { APIPayment } from '@pinetwork-js/api-typing';
 import { Star } from "@mui/icons-material";
 import { useAuth } from "../../contexts/index.ts";
+import { LOCALSTORAGE_KEYS } from "../../constants/index.ts";
 
 
 type PaymentMetadata = {
@@ -39,6 +43,9 @@ export const ServiceComponent = () => {
   const {mutateAsync:approvePayment } = useApprovePayment()
   const {mutateAsync:completePayment } = useCompletePayment()
   const {mutateAsync:cancelPayment } = useCancelPayment()
+  const {mutateAsync:incompletePayment } = useIncompletePayment()
+  const { mutateAsync:piLogin, isLoading:piLoginLoading } = usePiLogin();
+  
   const { user: currentUser } = useAuth();
   const [showBar, setShowBar] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -48,7 +55,13 @@ export const ServiceComponent = () => {
   const promoteService = async (memo: string, amount: number, paymentMetadata: Partial<PaymentMetadata>) => {
     const uid = currentUser?.uid || "";
     const scopes = Pi.consentedScopes
-    console.log({scopes});
+    if(!scopes.includes("payments")){
+      const authResult = await Pi.authenticate(["username", "payments"], onIncompletePayments);
+      piLogin({accessToken: authResult.accessToken, type:"provider", user:authResult.user}).then((data) =>{
+        localStorage.setItem(LOCALSTORAGE_KEYS.TOKEN, data.access_token);
+        localStorage.setItem(LOCALSTORAGE_KEYS.AUTH_TYPE, AuthType.PI)
+      })
+    }
     const paymentData = { amount, memo, uid, metadata: paymentMetadata };
     const callbacks = {
       onReadyForServerApproval,
@@ -61,6 +74,10 @@ export const ServiceComponent = () => {
     console.log(payment);
   }
 
+  const onIncompletePayments = (payment:APIPayment) => {
+    console.log({payment});
+    incompletePayment({payment}).then((data) => console.log({data}))
+  }
   const onReadyForServerApproval = (paymentId: string) => {
     console.log("onReadyForServerApproval", paymentId);
     return approvePayment({paymentId}).then((data) => {
