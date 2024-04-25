@@ -47,6 +47,8 @@ export const ServiceComponent = () => {
 
   const promoteService = async (memo: string, amount: number, paymentMetadata: Partial<PaymentMetadata>) => {
     const uid = currentUser?.uid || "";
+    const scopes = Pi.consentedScopes
+    console.log({scopes});
     const paymentData = { amount, memo, uid, metadata: paymentMetadata };
     const callbacks = {
       onReadyForServerApproval,
