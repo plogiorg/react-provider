@@ -44,7 +44,7 @@ export const ServiceComponent = () => {
   const {mutateAsync:completePayment } = useCompletePayment()
   const {mutateAsync:cancelPayment } = useCancelPayment()
   const {mutateAsync:incompletePayment } = useIncompletePayment()
-  const { mutateAsync:piLogin, isLoading:piLoginLoading } = usePiLogin();
+  const { mutateAsync:piLogin } = usePiLogin();
   
   const { user: currentUser } = useAuth();
   const [showBar, setShowBar] = useState(false)
