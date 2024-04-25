@@ -7,7 +7,7 @@ export type AuthContextState = {
   token: string | null;
   isLoggedIn: boolean;
   authType?:AuthType
-  user: Record<string, object> | null;
+  user: Record<string, string> | null;
 };
 
 export type AuthContextActions = {
