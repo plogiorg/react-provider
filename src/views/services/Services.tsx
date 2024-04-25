@@ -21,6 +21,8 @@ import {
 import { PlusIcon } from "../../assets/icons";
 import { Pi } from '@pinetwork-js/sdk';
 import { APIPayment } from '@pinetwork-js/api-typing';
+import { Star } from "@mui/icons-material";
+import { useAuth } from "../../contexts/index.ts";
 
 
 type PaymentMetadata = {
@@ -37,14 +39,14 @@ export const ServiceComponent = () => {
   const {mutateAsync:approvePayment } = useApprovePayment()
   const {mutateAsync:completePayment } = useCompletePayment()
   const {mutateAsync:cancelPayment } = useCancelPayment()
-
+  const { user: currentUser } = useAuth();
   const [showBar, setShowBar] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [selectedService, setSelectedService] = useState<Service | undefined>()
 
   const promoteService = async (memo: string, amount: number, paymentMetadata: Partial<PaymentMetadata>) => {
-    const uid = "9a06a60c-e920-4400-93eb-63c1ba325b1e"
+    const uid = currentUser?.uid || "";
     const paymentData = { amount, memo, uid, metadata: paymentMetadata };
     const callbacks = {
       onReadyForServerApproval,
@@ -174,6 +176,11 @@ export const ServiceComponent = () => {
                   </SvgIcon>
                 </CircularProgress>
                 <CardContent>
+                {service.isPromoted && (
+                        <div className="flex justify-end text-yellow-400">
+                          <Star color="inherit"></Star>
+                        </div>
+                      )}
                   <Typography level="body-md">Country</Typography>
                   <Typography level="h3">{service.country}</Typography>
 
