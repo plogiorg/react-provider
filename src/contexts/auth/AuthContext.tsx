@@ -29,7 +29,7 @@ export const AuthContextProvider: FC<Props> = ({ children }) => {
       try {
         dispatch({ type: "SET_LOADING", payload: { isLoading: true } });
         const { data: userResponse } = await getCurrentUser()
-        if (userResponse?.sub) {
+        if (userResponse?.sub || userResponse.uid) {
           dispatch({
             type: "SET_USER",
             payload: {
